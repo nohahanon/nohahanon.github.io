@@ -37,6 +37,11 @@ section {
 
 .section {
     &__title {
+        &__small {
+            font-size: 30px;
+            text-align: center;
+        }
+
         font-size: 48px;
         text-align: center;
 
@@ -349,6 +354,16 @@ section {
         }
 
     }
+}
+
+.relatedlinks {
+    &:hover {
+        opacity: .7;
+    }
+}
+
+.listside {
+    display: inline;
 }
 
 footer {
