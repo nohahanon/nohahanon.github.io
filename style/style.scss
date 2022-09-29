@@ -49,8 +49,8 @@ section {
 }
 
 .hero {
-    padding: 180px 10% 200px;
-    background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);
+    padding: 180px 5% 200px;
+    background-image: linear-gradient(-45deg, #ffcc99 0%, #ff4500 100%);
     color: #fff;
 
     h1 {
@@ -77,7 +77,7 @@ section {
         margin: 40px 0 0;
         font-size: 18px;
         font-weight: 900;
-        color: #FF6B95;
+        color: #ff6600;
         text-decoration: none;
         transition: .5s;
         border: 2px solid #fff;
@@ -94,14 +94,14 @@ section {
             width: 8px;
             height: 8px;
             top: calc(50% - 4px);
-            border-top: 2px solid #FF6B95;
-            border-right: 2px solid #FF6B95;
+            border-top: 2px solid #ff6600;
+            border-right: 2px solid #ff6600;
             -webkit-transform: rotate(45deg);
             transform: rotate(45deg);
         }
 
         &:hover {
-            background: #FF6B95;
+            background: #ff6600;
             color: #fff;
 
             &::after {
@@ -309,7 +309,7 @@ section {
 
         a {
             display: inline-block;
-            background: #FF6B95;
+            background: #ff6600;
             padding: 15px 40px 15px 20px;
             margin: 0px 0 0;
             font-size: 18px;
@@ -338,12 +338,12 @@ section {
             }
 
             &:hover {
-                border-color: #FF6B95;
+                border-color: #ff6600;
                 background: #fff;
-                color: #FF6B95;
+                color: #ff6600;
 
                 &::after {
-                    border-color: #FF6B95;
+                    border-color: #ff6600;
                 }
             }
         }
