@@ -3,27 +3,36 @@ const player = new Player({
     // トークンは https://developer.textalive.jp/profile で取得したものを使う
     app: { token: "y6RFZQdvGPRno4XK" },
     mediaElement: document.querySelector("#media"),
+    // mediaElement: document.getElementById("media"),
     mediaBannerPosition: "bottom right"
 
     // オプション一覧
     // https://developer.textalive.jp/packages/textalive-app-api/interfaces/playeroptions.html
 });
 
-const overlay = document.querySelector("#overlay");
-const bar = document.querySelector("#bar");
-const textContainer = document.querySelector("#text");
-const seekbar = document.querySelector("#seekbar");
-const paintedSeekbar = seekbar.querySelector("div");
+// const overlay = document.querySelector("#overlay");
+// const bar = document.querySelector("#bar");
+// const textContainer = document.querySelector("#text");
+// const seekbar = document.querySelector("#seekbar");
+// const paintedSeekbar = seekbar.querySelector("div");
+// let b, c;
+const overlay = document.getElementById("overlay");
+const bar = document.getElementById("bar");
+const textContainer = document.getElementById("text");
+const seekbar = document.getElementById("seekbar");
+const paintedSeekbar = seekbar.children[0];
 let b, c;
 
 player.addListener({
     /* APIの準備ができたら呼ばれる */
     onAppReady(app) {
         if (app.managed) {
-            document.querySelector("#control").className = "disabled";
+            // document.querySelector("#control").className = "disabled";
+            document.getElementById("control").className = "disabled";
         }
         if (!app.songUrl) {
-            document.querySelector("#media").className = "disabled";
+            // document.querySelector("#media").className = "disabled";
+            document.getElementById("media").className = "disabled";
 
             // king妃jack躍 / 宮守文学 feat. 初音ミク
             // https://developer.textalive.jp/events/magicalmirai2023/#snippets
@@ -50,9 +59,9 @@ player.addListener({
     /* 楽曲情報が取れたら呼ばれる */
     onVideoReady(video) {
         // 楽曲情報を表示
-        document.querySelector("#artist span").textContent =
+        document.getElementById("artist").textContent =
             player.data.song.artist.name;
-        document.querySelector("#song span").textContent = player.data.song.name;
+        document.getElementById("song").textContent = player.data.song.name;
 
         // 最後に表示した文字の情報をリセット
         c = null;
@@ -61,8 +70,8 @@ player.addListener({
     /* 再生コントロールができるようになったら呼ばれる */
     onTimerReady() {
         overlay.className = "disabled";
-        document.querySelector("#control > a#play").className = "";
-        document.querySelector("#control > a#stop").className = "";
+        document.getElementById("play").className = "";
+        document.getElementById("stop").className = "";
     },
 
     /* 再生位置の情報が更新されたら呼ばれる */
@@ -109,21 +118,21 @@ player.addListener({
 
     /* 楽曲の再生が始まったら呼ばれる */
     onPlay() {
-        const a = document.querySelector("#control > a#play");
+        const a = document.getElementById("play");
         while (a.firstChild) a.removeChild(a.firstChild);
         a.appendChild(document.createTextNode("\uf28b"));
     },
 
     /* 楽曲の再生が止まったら呼ばれる */
     onPause() {
-        const a = document.querySelector("#control > a#play");
+        const a = document.getElementById("play");
         while (a.firstChild) a.removeChild(a.firstChild);
         a.appendChild(document.createTextNode("\uf144"));
     }
 });
 
 /* 再生・一時停止ボタン */
-document.querySelector("#control > a#play").addEventListener("click", (e) => {
+document.getElementById("play").addEventListener("click", (e) => {
     e.preventDefault();
     if (player) {
         if (player.isPlaying) {
@@ -136,7 +145,7 @@ document.querySelector("#control > a#play").addEventListener("click", (e) => {
 });
 
 /* 停止ボタン */
-document.querySelector("#control > a#stop").addEventListener("click", (e) => {
+document.getElementById("stop").addEventListener("click", (e) => {
     e.preventDefault();
     if (player) {
         player.requestStop();
