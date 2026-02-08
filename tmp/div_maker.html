@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Book HTML 生成</title>
+  <style>
+    input, textarea {
+      width: 100%;
+    }
+    button {
+      margin-top: 15px;
+    }
+    textarea.output {
+      margin-top: 20px;
+      height: 300px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Book div HTML生成</h2>
+
+<label>タイトル</label>
+<input id="title">
+
+<label>著者</label>
+<input id="author">
+
+<label>あらすじ</label>
+<textarea id="summary" rows="3"></textarea>
+
+<label>感想（1行1項目）</label>
+<textarea id="appeal" rows="4"></textarea>
+
+<label>画像パス</label>
+<input id="img">
+
+<button onclick="generate()">HTML生成</button>
+
+<textarea class="output" id="output" readonly></textarea>
+
+<script>
+function generate() {
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+  const summary = document.getElementById('summary').value;
+  const img = document.getElementById('img').value;
+
+  const appeal = document.getElementById('appeal').value
+    .split('\n')
+    .filter(v => v.trim() !== '')
+    .map(v => `            <li>${v}`)
+    .join('\n');
+
+  const html =
+`<div class="book">
+  <h3>${title}</h3>
+  <div class="book-content">
+    <div class="book-text">
+      <b>著者:</b> ${author}<br>
+      <b>あらすじ:</b> ${summary}<br>
+      <b>感想:</b>
+      <ul>
+${appeal}
+      </ul>
+    </div>
+    <div class="book-img">
+      <figure>
+        <img src="${img}"/>
+      </figure>
+    </div>
+  </div>
+</div>`;
+
+  document.getElementById('output').value = html;
+}
+</script>
+
+</body>
+</html>
