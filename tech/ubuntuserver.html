@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="sf novel recommendation">
+    <meta name="format-detection" content="telephone=no,address=no,email=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex,nofollow">
+    <title>ubuntuで遊ぼう</title>
+    <link rel="shortcut icon" href="figs/falling.png" >
+    <link rel="stylesheet" href="leaf.css">
+  </head>
+  <body>
+    <h1>ubuntuで遊ぼう (apacheでhttpサーバー・sambaでファイルサーバー)</h1>
+    家のwifiの下限定なので安心。いつか自宅サーバーに挑戦するときを考えながらgithub pagesで公開している
+    
+    <h2>apacheでhttpサーバー</h2>
+    <ol>
+        <li>(初回のみ)sudo apt install apache2: インストール後自動的に起動する。ifconfigでIPを確認しhttp://IPで/var/html/www/index.htmlが表示される。自作htmlたちもそこに置けばいい。</li>
+        <li>(初回のみ)sudo ufw allow http: httpの80番ポートを開放。</li>
+        <li>sudo systemctl start apache2: 電源投入時に毎回起動するのが怠いならstartをenableにして自動起動を有効化</li>
+    </ol>
+    
+    <h2>sambaでfileサーバー</h2>
+    <ol>
+        <li>sudo apt install samba</li>
+        <li>sudo ufw allow samba: sambaの通信は遮断しないようにしてもらう</li>
+        <li>sudo systemctl start smbd nmbd: こっちもenableで自動起動の有効化が可能</li>
+        <li>gedit /etc/samba/smb.conf: 末尾に以下の内容を追加して保存</li>
+        <li>sudo chmod 777 shareddirectory</li>
+        <li>sudo pdbedit -a username: userの追加、パスワードの登録</li>
+    </ol>
+
+    <pre>
+        [test]
+        path = shareddirectory
+        browsable = yes
+        writable = yes
+        read only = no
+    </pre>
+
+    これでwindowsとかからtest共有でshareddirectoryに登録したユーザーIDとパスワードでアクセスできる。
+    "\\IP\test"でアクセスできる。
+    ubuntu側で固定IPを設定、windowsの定期バックアップをshareddirectoryに行ったりもできる。
+
+    <h2>将来的に</h2>
+    家にグローバスIPをくれるインターネット回線を契約して外部に公開することもできる。
+    その際はルーターとサーバーのhttp, httpsポートを開放、ルータに来たそれらのポートへのアクセスをサーバーにフォワードするように設定する。
+    必要ならドメインを取得する。 (回線代+ドメイン代がかかる)
+
+    ただ記事を公開するだけならhttpでも問題ないと思うがhttpなら表示もしてくれない場合もあるのでhttpsの対応が必要。
+    Let's Encryptを利用したデジタル証明書の取得が可能。
+    <ol>
+        <li>sudo systemctl stop apache2</li>
+        <li>sudo apt install software-properties-common</li>
+        <li>sudo add-apt-reopsitry ppa:certbot/certbot</li>
+        <li>sudo apt update</li>
+        <li>sudo apt install python-certbot-apache</li>
+        <li>sudo certbot --apache</li>
+        <li>sudo certbot renew</li>
+    </ol>
+
+  </body>
+</html>
